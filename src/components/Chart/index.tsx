@@ -1,6 +1,6 @@
 import React from 'react';
 import { DataItem } from '@/types';
-import styles from './styles.module.scss';
+import styles from './styles.module.css';
 
 type Props = {
   data: Array<DataItem>;

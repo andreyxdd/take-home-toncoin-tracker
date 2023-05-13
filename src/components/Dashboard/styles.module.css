@@ -1,0 +1,12 @@
+.dashboard {
+  border: 1px solid black;
+  height: 500px;
+}
+
+.error {
+  color: red;
+}
+
+.loading {
+  color: grey;
+}
