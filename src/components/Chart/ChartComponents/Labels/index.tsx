@@ -20,7 +20,7 @@ function Labels({
         let x = horizontalOffset + idx * tickWidth;
         let y = verticalOffset;
 
-        if (axis === 'y') {
+        if (axis === 'y') { // if y-axis is specified instead
           x = horizontalOffset;
           y = verticalOffset + idx * tickWidth;
         }

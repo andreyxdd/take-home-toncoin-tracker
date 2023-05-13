@@ -4,6 +4,7 @@ import { tickRange } from '@/utils/calc';
 import styles from './styles.module.css';
 import XLabels from './ChartComponents/XLabels';
 import YLabels from './ChartComponents/YLabels';
+import Plot from './ChartComponents/Plot';
 
 type Props = {
   data: Array<DataItem>;
@@ -25,10 +26,23 @@ function Chart({ data, yTicks = 5 }: Props) {
     }
   }, []);
 
-  const horizontalTicks = React.useMemo(() => {
+  const { ticks: horizontalTicks, minValue, maxValue } = React.useMemo(() => {
     const prices = data.map(({ price }) => price);
     return tickRange(prices, yTicks);
   }, [data, yTicks]);
+
+  const getYCoordinateFromValue = React.useCallback((value: number) => (
+    dimensions.width * 0.025 + (dimensions.height - dimensions.width * 0.05)
+    * (1 - Math.abs(value - minValue) / Math.abs(maxValue - minValue))
+  ), [dimensions.height, dimensions.width, minValue, maxValue]);
+
+  const yTickWidth = dimensions.height / (1 + yTicks);
+  const xTickWidth = dimensions.width / data.length;
+
+  const dataPoints = React.useMemo(() => data.map((item, idx) => ({
+    x: dimensions.width * 0.1 + idx * xTickWidth,
+    y: getYCoordinateFromValue(item.price),
+  })), [data, dimensions.width, getYCoordinateFromValue, xTickWidth]);
 
   if (!data.length) {
     return <p>No Data</p>;
@@ -41,21 +55,15 @@ function Chart({ data, yTicks = 5 }: Props) {
         data={data.map((item) => item.date)}
         horizontalOffset={dimensions.width * 0.05}
         verticalOffset={dimensions.height}
-        tickWidth={dimensions.width / data.length}
+        tickWidth={xTickWidth}
       />
       <YLabels
         data={horizontalTicks}
-        verticalOffset={dimensions.height / (2 * (1 + yTicks))}
+        verticalOffset={yTickWidth / 2}
         horizontalOffset={dimensions.width * 0.025}
-        tickWidth={dimensions.height / (1 + yTicks)}
+        tickWidth={yTickWidth}
       />
-      <g className={styles.data} data-setname="data-set">
-        <circle cx="90" cy="192" data-value="7.2" r="4" />
-        <circle cx="240" cy="141" data-value="8.1" r="4" />
-        <circle cx="388" cy="179" data-value="7.7" r="4" />
-        <circle cx="531" cy="200" data-value="6.8" r="4" />
-        <circle cx="677" cy="104" data-value="6.7" r="4" />
-      </g>
+      <Plot dataPoints={dataPoints} />
     </svg>
   );
 }

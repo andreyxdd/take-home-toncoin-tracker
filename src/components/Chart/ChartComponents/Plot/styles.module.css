@@ -1,0 +1,9 @@
+.line {
+  stroke: rgb(153, 153, 153);
+  stroke-opacity: 0.7;
+  stroke-width: 1.6;
+}
+
+.point {
+  fill: rgb(--main-rgb);
+}
