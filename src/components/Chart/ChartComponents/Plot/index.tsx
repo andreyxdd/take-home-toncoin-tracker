@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 
 type Point = {
   x: number;
@@ -11,7 +11,6 @@ type Props = {
   dataPoints: Array<Point>
 };
 
-const pointSize = 4;
 function Plot({ dataPoints }: Props) {
   return (
     <g>
@@ -29,15 +28,15 @@ function Plot({ dataPoints }: Props) {
           />
         );
       })}
-      {dataPoints.map((point, idx) => (
+      {/* {dataPoints.map((point, idx) => (
         <circle
           className={styles.point}
           key={`point-${point.x * point.y}-${idx}`}
           cx={point.x}
           cy={point.y}
-          r={pointSize}
+          r={4}
         />
-      ))}
+      ))} */}
     </g>
   );
 }

@@ -1,15 +1,3 @@
-:root {
-  --max-width: 1000px;
-  --main-rgb: 0, 136, 204;
-  --background-grey-rgb: 247, 249, 251;
-  --background-black-rgb: 35, 35, 40;
-  --secondary-dark-rgb: 106, 174, 255;
-  --secondary-light-rgb: 178, 212, 252;
-  --main-gradient: linear-gradeint(
-    --secondary-dark-rgb,
-    --secondary-light-rgb
-  );
-}
 
 * {
   box-sizing: border-box;
