@@ -1,4 +1,5 @@
 import React from 'react';
+import debounce from '@/utils/debounce';
 import useEventListener from './useEventListener';
 
 /**
@@ -8,6 +9,7 @@ import useEventListener from './useEventListener';
  */
 
 const PLOT_AREA_SCALE = 0.9;
+const debounceDelay = 300;
 
 function useSVGContainer() {
   // Mutable values like 'ref.current' aren't valid dependencies
@@ -30,7 +32,7 @@ function useSVGContainer() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref?.clientHeight, ref?.clientWidth]);
 
-  useEventListener('resize', handleContainer);
+  useEventListener('resize', debounce<Event>(handleContainer, debounceDelay));
 
   React.useLayoutEffect(() => {
     handleContainer();

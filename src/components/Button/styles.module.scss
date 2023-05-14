@@ -9,14 +9,16 @@
   font-size: 12px;
   line-height: 16px;
   text-align: center;
+  transition: 0.3s;
 }
 
 .button::first-letter {
-  text-transform:capitalize;
+  text-transform: capitalize;
 }
 
 .button:hover {
   background-color: $main;
+  cursor: pointer;
 }
 
 .button-clicked {
