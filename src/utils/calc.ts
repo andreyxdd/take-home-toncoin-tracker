@@ -8,12 +8,30 @@ export function tickRange(array: Array<number>, nTicks: number) {
   const tickWidth = (Math.abs(maxValue - minValue)) / nTicks;
 
   const ticks = [];
-  let tmp = minValue;
-  while (tmp < maxValue) {
-    tmp += tickWidth;
-    ticks.unshift(tmp.toPrecision(3));
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < nTicks; ++i) {
+    ticks[i] = (maxValue - i * tickWidth).toPrecision(3);
   }
   ticks.push(minValue.toPrecision(3));
 
   return { ticks, minValue, maxValue };
+}
+
+export function tickDatesRange(
+  array: Array<number>,
+  nTicks: number,
+) {
+  const size = array.length;
+  const startDate = array[0];
+  const endDate = array[size - 1];
+  const tickWidth = (endDate - startDate) / nTicks;
+
+  const ticks = [];
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < nTicks; ++i) {
+    ticks[i] = startDate + i * tickWidth;
+  }
+  ticks.push(endDate);
+
+  return ticks;
 }

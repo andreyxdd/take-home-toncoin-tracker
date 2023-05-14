@@ -1,7 +1,8 @@
 import React from 'react';
-import { DataItem } from '@/types';
-import { tickRange } from '@/utils/calc';
+import { DataItem, Periods } from '@/types';
+import { tickRange, tickDatesRange } from '@/utils/calc';
 import useSVGContainer from '@/hooks/useSVGContainer';
+import format from 'date-fns/format';
 import styles from './styles.module.css';
 import GridBorder from './ChartComponents/GridBorder';
 import { XLabels, YLabels } from './ChartComponents/Labels';
@@ -10,10 +11,21 @@ import { HorizontalGridLines } from './ChartComponents/GridLines';
 
 type Props = {
   data: Array<DataItem>;
+  xTicks?: number;
   yTicks?: number;
+  period: Periods;
 };
 
-function Chart({ data, yTicks = 5 }: Props) {
+const formatString = {
+  day: 'h aa',
+  week: 'LLL d',
+  month: 'LLL d',
+  year: 'MMM',
+};
+
+function Chart({
+  data, xTicks = 6, yTicks = 4, period,
+}: Props) {
   const { ref, container, plotArea } = useSVGContainer();
 
   const { ticks: verticalTicks, minValue, maxValue } = React.useMemo(() => {
@@ -21,8 +33,14 @@ function Chart({ data, yTicks = 5 }: Props) {
     return tickRange(prices, yTicks);
   }, [data, yTicks]);
 
+  const horizontalTicks = React.useMemo(() => {
+    const dates = data.map(({ date }) => date);
+    return tickDatesRange(dates, xTicks);
+  }, [data, xTicks]);
+
   const yTickWidth = plotArea.height / (1 + yTicks);
   const xTickWidth = plotArea.width / data.length;
+  const xLabelsTickWidth = plotArea.width / (1 + xTicks);
 
   const getYCoordinateFromValue = React.useCallback((value: number) => (
     (plotArea.height - yTickWidth)
@@ -52,9 +70,9 @@ function Chart({ data, yTicks = 5 }: Props) {
         offset={yTickWidth / 2}
       />
       <XLabels
-        data={data.map((item) => item.date)}
-        offset={{ x: 0, y: container.height * 0.93 }}
-        tickWidth={xTickWidth}
+        data={horizontalTicks.map((d) => format(d, formatString[period]))}
+        offset={{ x: xLabelsTickWidth / 2, y: container.height * 0.93 }}
+        tickWidth={xLabelsTickWidth}
       />
       <YLabels
         data={verticalTicks}
