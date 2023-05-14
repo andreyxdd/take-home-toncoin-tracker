@@ -6,6 +6,25 @@
   stroke-width: 1.6;
 }
 
-.point:hover {
+.tip-line {
+  stroke: transparent;
+  transition: 0.05s;
+}
+
+.tip-line:hover {
+  stroke: #cccccca5;
+  stroke-dasharray: 0;
+}
+
+.point {
+  fill: transparent;
+}
+
+.tip-line:hover + .point {
   fill: $main;
+}
+
+.tool-tip {
+  text-anchor: middle;
+  stroke: rgb(120, 120, 197);
 }

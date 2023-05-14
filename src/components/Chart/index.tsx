@@ -50,6 +50,7 @@ function Chart({
   const dataPoints = React.useMemo(() => data.map((item, idx) => ({
     x: idx * xTickWidth,
     y: yTickWidth / 2 + getYCoordinateFromValue(item.price),
+    ...item,
   })), [data, getYCoordinateFromValue, xTickWidth, yTickWidth]);
 
   if (!data.length) {
@@ -57,8 +58,7 @@ function Chart({
   }
 
   return (
-    <svg className={styles.container} aria-labelledby="title" role="img" ref={ref}>
-      <title id="title">Chart</title>
+    <svg className={styles.container} role="img" ref={ref}>
       <GridBorder
         width={plotArea.width}
         height={plotArea.height}
@@ -79,7 +79,7 @@ function Chart({
         offset={{ x: container.width * 0.91, y: yTickWidth / 2 }}
         tickWidth={yTickWidth}
       />
-      <Plot dataPoints={dataPoints} />
+      <Plot dataPoints={dataPoints} height={plotArea.height} />
     </svg>
   );
 }
