@@ -1,48 +1,38 @@
 import React from 'react';
 import { DataItem } from '@/types';
 import { tickRange } from '@/utils/calc';
+import useSVGContainer from '@/hooks/useSVGContainer';
 import styles from './styles.module.css';
-import XLabels from './ChartComponents/XLabels';
-import YLabels from './ChartComponents/YLabels';
+import GridBorder from './ChartComponents/GridBorder';
+import { XLabels, YLabels } from './ChartComponents/Labels';
 import Plot from './ChartComponents/Plot';
+import { HorizontalGridLines } from './ChartComponents/GridLines';
 
 type Props = {
   data: Array<DataItem>;
   yTicks?: number;
 };
 
-const PADDING = 0.05;
-
 function Chart({ data, yTicks = 5 }: Props) {
-  const [dimensions, setDiemnsions] = React.useState({ width: 0, height: 0 });
-  const ref = React.useRef<SVGSVGElement | null>(null);
-  React.useEffect(() => {
-    if (ref.current) {
-      const { clientHeight, clientWidth } = ref.current;
-      setDiemnsions({
-        height: clientHeight * (1 - PADDING),
-        width: clientWidth * (1 - PADDING),
-      });
-    }
-  }, []);
+  const { ref, container, plotArea } = useSVGContainer();
 
-  const { ticks: horizontalTicks, minValue, maxValue } = React.useMemo(() => {
+  const { ticks: verticalTicks, minValue, maxValue } = React.useMemo(() => {
     const prices = data.map(({ price }) => price);
     return tickRange(prices, yTicks);
   }, [data, yTicks]);
 
-  const getYCoordinateFromValue = React.useCallback((value: number) => (
-    dimensions.width * 0.025 + (dimensions.height - dimensions.width * 0.05)
-    * (1 - Math.abs(value - minValue) / Math.abs(maxValue - minValue))
-  ), [dimensions.height, dimensions.width, minValue, maxValue]);
+  const yTickWidth = plotArea.height / (1 + yTicks);
+  const xTickWidth = plotArea.width / data.length;
 
-  const yTickWidth = dimensions.height / (1 + yTicks);
-  const xTickWidth = dimensions.width / data.length;
+  const getYCoordinateFromValue = React.useCallback((value: number) => (
+    (plotArea.height - yTickWidth)
+    * (1 - Math.abs(value - minValue) / Math.abs(maxValue - minValue))
+  ), [plotArea, yTickWidth, minValue, maxValue]);
 
   const dataPoints = React.useMemo(() => data.map((item, idx) => ({
-    x: dimensions.width * 0.1 + idx * xTickWidth,
-    y: getYCoordinateFromValue(item.price),
-  })), [data, dimensions.width, getYCoordinateFromValue, xTickWidth]);
+    x: idx * xTickWidth,
+    y: yTickWidth / 2 + getYCoordinateFromValue(item.price),
+  })), [data, getYCoordinateFromValue, xTickWidth, yTickWidth]);
 
   if (!data.length) {
     return <p>No Data</p>;
@@ -51,16 +41,24 @@ function Chart({ data, yTicks = 5 }: Props) {
   return (
     <svg className={styles.container} aria-labelledby="title" role="img" ref={ref}>
       <title id="title">Chart</title>
+      <GridBorder
+        width={plotArea.width}
+        height={plotArea.height}
+      />
+      <HorizontalGridLines
+        size={plotArea.width}
+        nTicks={yTicks}
+        tickWidth={yTickWidth}
+        offset={yTickWidth / 2}
+      />
       <XLabels
         data={data.map((item) => item.date)}
-        horizontalOffset={dimensions.width * 0.05}
-        verticalOffset={dimensions.height}
+        offset={{ x: 0, y: container.height * 0.93 }}
         tickWidth={xTickWidth}
       />
       <YLabels
-        data={horizontalTicks}
-        verticalOffset={yTickWidth / 2}
-        horizontalOffset={dimensions.width * 0.025}
+        data={verticalTicks}
+        offset={{ x: container.width * 0.91, y: yTickWidth / 2 }}
         tickWidth={yTickWidth}
       />
       <Plot dataPoints={dataPoints} />

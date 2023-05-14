@@ -3,26 +3,28 @@ import React from 'react';
 import styles from './styles.module.css';
 
 type Props = {
-  verticalOffset?: number;
-  horizontalOffset?: number;
+  offset?: {
+    x: number;
+    y: number;
+  };
   data: Array<number | string>;
   tickWidth: number;
-  axis: 'x' | 'y'
+  alongAxis: 'x' | 'y'
 };
 
 function Labels({
-  verticalOffset = 0, horizontalOffset = 0, data, tickWidth, axis,
+  offset, data, tickWidth, alongAxis,
 }: Props) {
   return (
-    <g className={`${styles.labels} ${styles[`${axis}-labels`]}`}>
+    <g className={`${styles.labels} ${styles[`${alongAxis}-labels`]}`}>
       {data.map((item, idx) => {
         // x-axis is by default
-        let x = horizontalOffset + idx * tickWidth;
-        let y = verticalOffset;
+        let x = (offset?.x || 0) + idx * tickWidth;
+        let y = (offset?.y || 0);
 
-        if (axis === 'y') { // if y-axis is specified instead
-          x = horizontalOffset;
-          y = verticalOffset + idx * tickWidth;
+        if (alongAxis === 'y') { // if y-axis is specified instead
+          x = (offset?.x || 0);
+          y = (offset?.y || 0) + idx * tickWidth;
         }
 
         return (
@@ -35,4 +37,10 @@ function Labels({
   );
 }
 
-export default Labels;
+export function XLabels(props: Omit<Props, 'alongAxis'>) {
+  return <Labels {...props} alongAxis="x" />;
+}
+
+export function YLabels(props: Omit<Props, 'alongAxis'>) {
+  return <Labels {...props} alongAxis="y" />;
+}

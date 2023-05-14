@@ -7,7 +7,7 @@
 }
 
 .labels .y-labels {
-  text-anchor: end;
+  text-anchor: start;
 }
 
 .label-title {
