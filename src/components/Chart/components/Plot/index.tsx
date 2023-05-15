@@ -3,19 +3,19 @@ import styles from './styles.module.scss';
 import Tooltip from '../Tooltip';
 import useChartContext from '../../hooks/useChartContext';
 import { DATA_POINT_SIZE } from '../../config';
+import { DataType } from '../../types';
 
-function Plot() {
-  const { plot: { height }, data } = useChartContext();
-
+function Plot<T extends DataType>() {
+  const { plot: { height }, data, dataKeys } = useChartContext();
   const xTickWidth = data[1].x - data[0].x;
   return (
     <g>
-      {data.map((point, idx, arr) => {
+      {data.map((point: T, idx: number, arr: Array<T>) => {
         if (idx === 0) {
           return (
             <Tooltip
               point={point}
-              key={`first-point-${point.date}`}
+              key={`first-point-${point[dataKeys.x]}`}
               height={height}
               xTickWidth={xTickWidth}
             />
@@ -23,7 +23,7 @@ function Plot() {
         }
         const prevPoint = arr[idx - 1];
         return (
-          <React.Fragment key={`data-point-${point.date}`}>
+          <React.Fragment key={`data-point-${point[dataKeys.x]}`}>
             <line
               className={styles.line}
               x1={prevPoint.x}
@@ -49,4 +49,4 @@ function Plot() {
   );
 }
 
-export default Plot;
+export default React.memo(Plot);

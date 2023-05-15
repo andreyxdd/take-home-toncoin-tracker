@@ -17,7 +17,7 @@ function GridLines({ nTicks, alongAxis }: Props) {
   } = useChartContext();
   return (
     <g className={styles.grid}>
-      {range({ to: nTicks + 1 }).map((idx) => {
+      {range({ to: nTicks - 1 }).map((idx) => {
         // alongAxis === 'x' is default:
         let x1 = 0;
         let x2 = width;

@@ -2,6 +2,7 @@ import React from 'react';
 import format from 'date-fns/format';
 import styles from './styles.module.scss';
 import { DATA_POINT_SIZE } from '../../config';
+import useChartContext from '../../hooks/useChartContext';
 
 type Props = {
   point: any;
@@ -11,6 +12,7 @@ type Props = {
 
 function Tooltip({ point, height, xTickWidth }: Props) {
   const [isVisible, setIsVisible] = React.useState(false);
+  const { dataKeys } = useChartContext();
 
   return (
     <>
@@ -36,9 +38,9 @@ function Tooltip({ point, height, xTickWidth }: Props) {
         y={height}
         style={{ display: isVisible ? 'block' : 'none' }}
       >
-        {point.price.toPrecision(5)}
+        {point[dataKeys.y].toPrecision(5)}
         {'\n'}
-        {format(point.date, 'PPp')}
+        {format(point[dataKeys.x], 'PPp')}
       </text>
     </>
   );

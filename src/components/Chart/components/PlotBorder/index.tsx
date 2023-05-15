@@ -14,4 +14,4 @@ function PlotBorder() {
   );
 }
 
-export default PlotBorder;
+export default React.memo(PlotBorder);

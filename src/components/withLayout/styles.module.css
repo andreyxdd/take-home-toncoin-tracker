@@ -1,18 +1,10 @@
-.dashboard {
+.subsection {
   border: 1px solid black;
   height: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.error {
-  color: red;
-}
-
-.loading {
-  color: grey;
 }
 
 .subnavbar{

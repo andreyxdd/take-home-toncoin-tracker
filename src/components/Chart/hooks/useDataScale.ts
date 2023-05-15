@@ -1,4 +1,5 @@
 import React from 'react';
+import { DataType } from '../types';
 
 /**
  * Hook to project values from the data set into X and Y coordinates.
@@ -11,8 +12,9 @@ import React from 'react';
  * @returns new dataset with coordinates corresponding to the actual values
  */
 
-function useDataScale(
-  data: Array<any>,
+function useDataScale<T extends DataType>(
+  data: Array<T>,
+  dataKey: keyof T,
   yMin:number,
   yMax:number,
   height:number,
@@ -22,9 +24,9 @@ function useDataScale(
   const dataPoints = React.useMemo(() => data.map((item, idx) => {
     const x = idx * tickLength.x;
     const y = offset.y + (height - tickLength.y)
-    * (1 - Math.abs(item.price - yMin) / Math.abs(yMax - yMin));
+    * (1 - Math.abs(item[dataKey] - yMin) / Math.abs(yMax - yMin));
     return { x, y, ...item };
-  }), [data, tickLength.x, tickLength.y, offset.y, height, yMin, yMax]);
+  }), [data, tickLength.x, tickLength.y, offset.y, height, dataKey, yMin, yMax]);
 
   return dataPoints;
 }

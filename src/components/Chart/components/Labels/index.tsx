@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
-import { Point } from '@/types';
+import { Point } from '../../types';
 import styles from './styles.module.css';
 import useChartContext from '../../hooks/useChartContext';
 
