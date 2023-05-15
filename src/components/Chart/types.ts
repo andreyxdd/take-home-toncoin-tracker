@@ -1,6 +1,6 @@
 import { Periods } from '@/types';
 
-export type DataType = {
+export type DataItem = {
   date: number;
   [key: string]: number;
 };
@@ -28,5 +28,5 @@ export type ChartContextProps = {
   offset: Point;
   verticalLabels: Array<number | string>;
   horizontalLabels: Array<number | string>;
-  data: Array<DataType>;
+  data: Array<DataItem>;
 };

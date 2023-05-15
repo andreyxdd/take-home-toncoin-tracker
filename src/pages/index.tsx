@@ -2,8 +2,7 @@ import Head from 'next/head';
 import { Inter } from 'next/font/google';
 import styles from '@/styles/Home.module.css';
 import React from 'react';
-import PriceSection from '@/components/PriceSection';
-import VolumeSection from '@/components/VolumeSection';
+import Sections from '@/components/Sections';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,8 +18,7 @@ export default function Home() {
       <main className={`${styles.main} ${inter.className}`}>
         <div className={styles.container}>
           <h2>The Open Network: Market Indicators</h2>
-          <PriceSection />
-          <VolumeSection />
+          <Sections />
         </div>
       </main>
     </>

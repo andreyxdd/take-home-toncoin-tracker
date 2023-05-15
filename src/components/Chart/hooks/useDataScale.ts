@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataType } from '../types';
+import { DataItem } from '../types';
 
 /**
  * Hook to project values from the data set into X and Y coordinates.
@@ -12,7 +12,7 @@ import { DataType } from '../types';
  * @returns new dataset with coordinates corresponding to the actual values
  */
 
-function useDataScale<T extends DataType>(
+function useDataScale<T extends DataItem>(
   data: Array<T>,
   dataKey: keyof T,
   yMin:number,

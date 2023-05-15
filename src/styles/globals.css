@@ -16,17 +16,3 @@ body {
     color-scheme: dark;
   }
 }
-
-.error {
-  color: red;
-  flex: 1;
-  display: flex;
-  align-items: center;
-}
-
-.loading {
-  color: grey;
-  flex: 1;
-  display: flex;
-  align-items: center;
-}

@@ -1,8 +1,8 @@
 import React from 'react';
 import { tickRange } from '@/utils/calc';
-import { DataType } from '../types';
+import { DataItem } from '../types';
 
-function useVerticalLabels<T extends DataType>(
+function useVerticalLabels<T extends DataItem>(
   data: Array<T>,
   dataKey: keyof T,
   nTicks: number,

@@ -2,7 +2,7 @@ import React from 'react';
 import useSVGContainer from '@/components/Chart/hooks/useSVGContainer';
 import { Periods } from '@/types';
 import format from 'date-fns/format';
-import { ChartContextProps, DataType, DataKeys } from '../../types';
+import { ChartContextProps, DataItem, DataKeys } from '../../types';
 import {
   initialContext, PLOT_AREA_SCALE, numberOfTicks, formatString,
 } from '../../config';
@@ -13,14 +13,14 @@ import useHorizontalLabels from '../../hooks/useHorizontalLabels';
 
 export const ChartContext = React.createContext<ChartContextProps>(initialContext);
 
-type Props<T extends DataType> = {
+type Props<T extends DataItem> = {
   children: React.ReactNode;
   period: Periods;
   data: Array<T>;
   dataKeys: DataKeys<T>;
 };
 
-function Chart<T extends DataType>({
+function Chart<T extends DataItem>({
   children, period, data, dataKeys,
 }: Props<T>) {
   const { ref, container } = useSVGContainer();
