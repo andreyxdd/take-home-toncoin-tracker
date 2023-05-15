@@ -1,7 +1,8 @@
 import React from 'react';
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 import Tooltip from '../Tooltip';
 import useChartContext from '../../hooks/useChartContext';
+import { DATA_POINT_SIZE } from '../../config';
 
 function Plot() {
   const { plot: { height }, data } = useChartContext();
@@ -38,6 +39,12 @@ function Plot() {
           </React.Fragment>
         );
       })}
+      <circle
+        className={styles['last-point']}
+        cx={data[data.length - 1].x}
+        cy={data[data.length - 1].y}
+        r={DATA_POINT_SIZE}
+      />
     </g>
   );
 }
