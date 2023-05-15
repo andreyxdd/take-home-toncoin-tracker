@@ -1,12 +1,9 @@
 import React from 'react';
 import styles from './styles.module.scss';
+import useChartContext from '../../hooks/useChartContext';
 
-type Props = {
-  width: number;
-  height: number;
-};
-
-function GridBorder({ width, height }: Props) {
+function PlotBorder() {
+  const { plot: { height, width } } = useChartContext();
   return (
     <g className={styles.grid}>
       <line x1={0} x2={width} y1={0} y2={0} />
@@ -17,4 +14,4 @@ function GridBorder({ width, height }: Props) {
   );
 }
 
-export default GridBorder;
+export default PlotBorder;

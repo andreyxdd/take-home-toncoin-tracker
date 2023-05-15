@@ -17,7 +17,8 @@ export default function Home() {
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
         <div className={styles.container}>
-          <h3>Toncoin Tracker</h3>
+          <h2>The Open Network: Market Indicators</h2>
+          <Dashboard />
           <Dashboard />
         </div>
       </main>

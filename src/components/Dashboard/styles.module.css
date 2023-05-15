@@ -15,9 +15,15 @@
   color: grey;
 }
 
-.subnavbar {
+.subnavbar{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button-container {
   margin-left: auto;
-  width: 50%;
   display: flex;
   justify-content: flex-end;
   align-items: center;

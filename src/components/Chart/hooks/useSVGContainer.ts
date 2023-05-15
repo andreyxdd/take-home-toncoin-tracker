@@ -1,6 +1,6 @@
 import React from 'react';
 import debounce from '@/utils/debounce';
-import useEventListener from './useEventListener';
+import useEventListener from '../../../hooks/useEventListener';
 
 /**
  * ACKNOWLEDGEMENTS:
@@ -8,10 +8,7 @@ import useEventListener from './useEventListener';
  * The deas implemented below were taken from there.
  */
 
-const PLOT_AREA_SCALE = 0.9;
-const debounceDelay = 300;
-
-function useSVGContainer() {
+function useSVGContainer(resizeDelay: number = 300) {
   // Mutable values like 'ref.current' aren't valid dependencies
   // because mutating them doesn't re-render the component:
   // e.g. const ref = React.useRef<SVGSVGElement | null>(null);
@@ -32,7 +29,7 @@ function useSVGContainer() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref?.clientHeight, ref?.clientWidth]);
 
-  useEventListener('resize', debounce<Event>(handleContainer, debounceDelay));
+  useEventListener('resize', debounce<Event>(handleContainer, resizeDelay));
 
   React.useLayoutEffect(() => {
     handleContainer();
@@ -42,10 +39,6 @@ function useSVGContainer() {
   return {
     ref: setRef,
     container,
-    plotArea: {
-      width: container.width * PLOT_AREA_SCALE,
-      height: container.height * PLOT_AREA_SCALE,
-    },
   };
 }
 

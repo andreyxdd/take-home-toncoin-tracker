@@ -1,85 +1,82 @@
 import React from 'react';
-import { DataItem, Periods } from '@/types';
-import { tickRange, tickDatesRange } from '@/utils/calc';
-import useSVGContainer from '@/hooks/useSVGContainer';
+import useSVGContainer from '@/components/Chart/hooks/useSVGContainer';
+import { Dimensions, Periods, Point } from '@/types';
 import format from 'date-fns/format';
+import {
+  initialContext, PLOT_AREA_SCALE, numberOfTicks, formatString,
+} from './config';
 import styles from './styles.module.css';
-import GridBorder from './ChartComponents/GridBorder';
-import { XLabels, YLabels } from './ChartComponents/Labels';
-import Plot from './ChartComponents/Plot';
-import { HorizontalGridLines } from './ChartComponents/GridLines';
+import useDataScale from './hooks/useDataScale';
+import useVerticalLabels from './hooks/useVerticalLabels';
+import useHorizontalLabels from './hooks/useHorizontalLabels';
+
+export type ChartContextProps = {
+  container: Dimensions;
+  plot: Dimensions;
+  period: Periods;
+  labelsTickLengths: Point;
+  offset: Point;
+  verticalLabels: Array<number | string>;
+  horizontalLabels: Array<number | string>;
+  data: Array<any>;
+};
+export const ChartContext = React.createContext<ChartContextProps>(initialContext);
 
 type Props = {
-  data: Array<DataItem>;
-  xTicks?: number;
-  yTicks?: number;
+  children: React.ReactNode;
   period: Periods;
+  data: Array<any>;
 };
 
-const formatString = {
-  day: 'h aa',
-  week: 'LLL d',
-  month: 'LLL d',
-  year: 'MMM',
-};
+function Chart({ children, period, data }: Props) {
+  const { ref, container } = useSVGContainer();
+  const plot = React.useMemo(() => ({
+    width: container.width * PLOT_AREA_SCALE.x,
+    height: container.height * PLOT_AREA_SCALE.y,
+  }), [container.width, container.height]);
 
-function Chart({
-  data, xTicks = 6, yTicks = 4, period,
-}: Props) {
-  const { ref, container, plotArea } = useSVGContainer();
+  const labelsTickLengths = React.useMemo(() => ({
+    x: plot.width / (1 + numberOfTicks.x),
+    y: plot.height / (1 + numberOfTicks.y),
+  }), [plot.width, plot.height]);
+  const offset = React.useMemo(() => ({
+    x: 0,
+    y: labelsTickLengths.y / 2,
+  }), [labelsTickLengths.y]);
+  const dataTickLengths = {
+    x: plot.width / data.length,
+    y: labelsTickLengths.y,
+  };
 
-  const { ticks: verticalTicks, minValue, maxValue } = React.useMemo(() => {
-    const prices = data.map(({ price }) => price);
-    return tickRange(prices, yTicks);
-  }, [data, yTicks]);
+  const { labels: verticalLabels, minValue, maxValue } = useVerticalLabels(data, numberOfTicks.y);
+  const horizontalLabels = useHorizontalLabels(data, numberOfTicks.x);
+  const dataPoints = useDataScale(data, minValue, maxValue, plot.height, dataTickLengths, offset);
 
-  const horizontalTicks = React.useMemo(() => {
-    const dates = data.map(({ date }) => date);
-    return tickDatesRange(dates, xTicks);
-  }, [data, xTicks]);
-
-  const yTickWidth = plotArea.height / (1 + yTicks);
-  const xTickWidth = plotArea.width / data.length;
-  const xLabelsTickWidth = plotArea.width / (1 + xTicks);
-
-  const getYCoordinateFromValue = React.useCallback((value: number) => (
-    (plotArea.height - yTickWidth)
-    * (1 - Math.abs(value - minValue) / Math.abs(maxValue - minValue))
-  ), [plotArea, yTickWidth, minValue, maxValue]);
-
-  const dataPoints = React.useMemo(() => data.map((item, idx) => ({
-    x: idx * xTickWidth,
-    y: yTickWidth / 2 + getYCoordinateFromValue(item.price),
-    ...item,
-  })), [data, getYCoordinateFromValue, xTickWidth, yTickWidth]);
-
-  if (!data.length) {
-    return <p>No Data</p>;
-  }
+  // See details regarding this memoization in eslint : react/jsx-no-constructed-context-values
+  const momoizedData = React.useMemo(() => ({
+    container,
+    plot,
+    period,
+    labelsTickLengths,
+    offset,
+    verticalLabels,
+    horizontalLabels: horizontalLabels.map((d) => format(d, formatString[period])),
+    data: dataPoints,
+  }), [
+    container,
+    plot,
+    period,
+    labelsTickLengths,
+    offset,
+    verticalLabels, horizontalLabels,
+    dataPoints,
+  ]);
 
   return (
-    <svg className={styles.container} role="img" ref={ref}>
-      <GridBorder
-        width={plotArea.width}
-        height={plotArea.height}
-      />
-      <HorizontalGridLines
-        size={plotArea.width}
-        nTicks={yTicks}
-        tickWidth={yTickWidth}
-        offset={yTickWidth / 2}
-      />
-      <XLabels
-        data={horizontalTicks.map((d) => format(d, formatString[period]))}
-        offset={{ x: xLabelsTickWidth / 2, y: container.height * 0.93 }}
-        tickWidth={xLabelsTickWidth}
-      />
-      <YLabels
-        data={verticalTicks}
-        offset={{ x: container.width * 0.91, y: yTickWidth / 2 }}
-        tickWidth={yTickWidth}
-      />
-      <Plot dataPoints={dataPoints} height={plotArea.height} />
+    <svg className={styles.container} ref={ref}>
+      <ChartContext.Provider value={momoizedData}>
+        {children}
+      </ChartContext.Provider>
     </svg>
   );
 }
