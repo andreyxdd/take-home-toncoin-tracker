@@ -1,16 +1,3 @@
-import { Periods } from '@/types';
-
-export const initialContext = {
-  container: { width: 0, height: 0 },
-  plot: { width: 0, height: 0 },
-  period: 'day' as Periods,
-  labelsTickLengths: { x: 0, y: 0 },
-  offset: { x: 0, y: 0 },
-  verticalLabels: [],
-  horizontalLabels: [],
-  data: [],
-};
-
 export const PLOT_AREA_SCALE = {
   x: 0.92,
   y: 0.9,

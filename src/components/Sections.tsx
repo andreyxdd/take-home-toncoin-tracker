@@ -20,6 +20,7 @@ function Sections() {
     <>
       {sections.map(({ title, useQuery, dataKeys }) => (
         <Section
+          key={`${title}-${JSON.stringify(dataKeys)}`}
           title={title}
           useQuery={useQuery}
           dataKeys={dataKeys}

@@ -28,5 +28,6 @@ export type ChartContextProps = {
   offset: Point;
   verticalLabels: Array<number | string>;
   horizontalLabels: Array<number | string>;
+  dataKeys: DataKeys<DataItem>;
   data: Array<DataItem>;
 };

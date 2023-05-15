@@ -3,14 +3,13 @@ import styles from './styles.module.scss';
 import Tooltip from '../Tooltip';
 import useChartContext from '../../hooks/useChartContext';
 import { DATA_POINT_SIZE } from '../../config';
-import { DataItem } from '../../types';
 
-function Plot<T extends DataItem>() {
+function Plot() {
   const { plot: { height }, data, dataKeys } = useChartContext();
   const xTickWidth = data[1].x - data[0].x;
   return (
     <g>
-      {data.map((point: T, idx: number, arr: Array<T>) => {
+      {data.map((point, idx, arr) => {
         if (idx === 0) {
           return (
             <Tooltip
