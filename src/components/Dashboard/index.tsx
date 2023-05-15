@@ -1,17 +1,15 @@
 import React from 'react';
-import useDataQuery from '@/hooks/useDataQuery';
+import usePriceQuery from '@/hooks/queries/usePriceQuery';
 import { periods, Periods } from '@/types';
 import styles from './styles.module.css';
-import Chart from '../Chart';
+import {
+  Chart, Plot, PlotBorder, HorizontalGridLines, HorizontalLabels, VerticalLabels,
+} from '../Chart';
 import Button from '../Button';
-import PlotBorder from '../Chart/components/PlotBorder';
-import { HorizontalGridLines } from '../Chart/components/GridLines';
-import { XLabels, YLabels } from '../Chart/components/Labels';
-import Plot from '../Chart/components/Plot';
 
 function Dashboard() {
   const [period, setPeriod] = React.useState<Periods>('day');
-  const { data, isError, isLoading } = useDataQuery(period);
+  const { data, isError, isLoading } = usePriceQuery(period);
 
   if (isError) {
     return (
@@ -57,8 +55,8 @@ function Dashboard() {
       <Chart data={data} period={period}>
         <PlotBorder />
         <HorizontalGridLines />
-        <XLabels />
-        <YLabels />
+        <HorizontalLabels />
+        <VerticalLabels />
         <Plot />
       </Chart>
     </section>

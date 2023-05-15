@@ -36,7 +36,7 @@ function Labels({
   );
 }
 
-export const XLabels = React.memo(() => {
+export const HorizontalLabels = React.memo(() => {
   const {
     labelsTickLengths,
     horizontalLabels,
@@ -52,7 +52,7 @@ export const XLabels = React.memo(() => {
   );
 });
 
-export const YLabels = React.memo(() => {
+export const VerticalLabels = React.memo(() => {
   const {
     labelsTickLengths,
     verticalLabels,

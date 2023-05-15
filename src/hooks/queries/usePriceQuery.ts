@@ -20,7 +20,7 @@ const mapping = {
   },
 };
 
-const useDataQuery = (period: Periods) => {
+const usePriceQuery = (period: Periods) => {
   const query = useQuery({
     queryKey: ['data-query', period],
     queryFn: async () => {
@@ -37,4 +37,4 @@ const useDataQuery = (period: Periods) => {
   return query;
 };
 
-export default useDataQuery;
+export default usePriceQuery;

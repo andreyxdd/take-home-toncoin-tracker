@@ -9,14 +9,14 @@
 
 @keyframes example {
   0%   {fill: $main;}
-  25%  {fill: $secondary-dark;}
-  50%  {fill: $secondary-dark;}
+  45%  {fill: $secondary-dark;}
+  55%  {fill: $secondary-dark;}
   100% {fill: $main;}
 }
 
 .last-point{
   fill: $main;
   animation-name: example;
-  animation-duration: 3s;
+  animation-duration: 2s;
   animation-iteration-count: infinite;
 }

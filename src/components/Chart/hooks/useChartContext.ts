@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChartContext, ChartContextProps } from '../index';
+import { ChartContext, ChartContextProps } from '../components/Container/index';
 
 const useChartContext = () => React.useContext(ChartContext) as ChartContextProps;
 
