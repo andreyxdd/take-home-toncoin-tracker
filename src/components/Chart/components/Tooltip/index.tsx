@@ -12,7 +12,7 @@ type Props = {
 
 function Tooltip({ point, height, xTickWidth }: Props) {
   const [isVisible, setIsVisible] = React.useState(false);
-  const { dataKeys } = useChartContext();
+  const { dataKeys, plot } = useChartContext();
 
   return (
     <>
@@ -32,16 +32,28 @@ function Tooltip({ point, height, xTickWidth }: Props) {
         cy={point.y}
         r={DATA_POINT_SIZE}
       />
-      <text
-        className={styles['tool-tip']}
-        x={point.x}
+      <foreignObject
+        x={point.x - plot.padding.left}
         y={height}
-        style={{ display: isVisible ? 'block' : 'none' }}
+        textAnchor="middle"
+        style={{
+          display: isVisible ? 'block' : 'none',
+          height: '100%',
+          width: plot.padding.left * 2,
+        }}
       >
-        {point[dataKeys.y].toPrecision(5)}
-        {'\n'}
-        {format(point[dataKeys.x], 'PPp')}
-      </text>
+        <div className={styles['tool-tip']}>
+          <p>
+            <b>
+              {dataKeys.y}
+              :
+            </b>
+            {' '}
+            {point[dataKeys.y].toPrecision(4)}
+          </p>
+          <p>{format(point[dataKeys.x], 'PPp')}</p>
+        </div>
+      </foreignObject>
     </>
   );
 }

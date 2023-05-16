@@ -19,7 +19,18 @@
   fill: $main;
 }
 
-.tool-tip {
-  text-anchor: middle;
-  stroke: rgb(120, 120, 197);
+.tool-tip  {
+  font-size: 12px;
+  border: 1px solid black;
+  border-radius: 0.2rem;
+  background-color: white;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (max-width: 600px) {
+  .tool-tip  {
+    font-size: 2vw;
+  }
 }
