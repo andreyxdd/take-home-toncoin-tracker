@@ -1,7 +1,7 @@
 import React from 'react';
 import { range } from '@/utils/calc';
 import styles from './styles.module.scss';
-import { numberOfTicks } from '../../config';
+import { nVerticalTicks } from '../../config';
 import useChartContext from '../../hooks/useChartContext';
 
 type Props = {
@@ -9,24 +9,24 @@ type Props = {
   alongAxis: 'x' | 'y';
 };
 
-function GridLines({ nTicks, alongAxis }: Props) {
+export function GridLines({ nTicks, alongAxis }: Props) {
   const {
     plot: { height, width },
     labelsTickLengths,
-    offset,
+    dataOffset,
   } = useChartContext();
   return (
     <g className={styles.grid}>
-      {range({ to: nTicks - 2 }).map((idx) => {
+      {range({ to: nTicks }).map((idx) => {
         // alongAxis === 'x' is default:
-        let x1 = 0;
-        let x2 = width;
-        let y1 = offset.y + idx * labelsTickLengths.y;
-        let y2 = offset.y + idx * labelsTickLengths.y;
+        let x1 = dataOffset.x;
+        let x2 = +dataOffset.x + width;
+        let y1 = dataOffset.y + idx * labelsTickLengths.y;
+        let y2 = dataOffset.y + idx * labelsTickLengths.y;
 
         if (alongAxis === 'y') { // otherwise y-axis
-          x1 = offset.x + idx * labelsTickLengths.x;
-          x2 = offset.x + idx * labelsTickLengths.x;
+          x1 = dataOffset.x + idx * labelsTickLengths.x;
+          x2 = dataOffset.x + idx * labelsTickLengths.x;
           y1 = 0;
           y2 = height;
         }
@@ -40,9 +40,5 @@ function GridLines({ nTicks, alongAxis }: Props) {
 }
 
 export const HorizontalGridLines = React.memo(
-  () => <GridLines alongAxis="x" nTicks={numberOfTicks.x} />,
-);
-
-export const VerticalGridLines = React.memo(
-  () => <GridLines alongAxis="y" nTicks={numberOfTicks.y} />,
+  () => <GridLines alongAxis="x" nTicks={nVerticalTicks} />,
 );

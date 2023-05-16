@@ -11,11 +11,11 @@ type Props = {
   alongAxis: 'x' | 'y';
 };
 
-function Labels({
+export function Labels({
   labels, offset, tickWidth, alongAxis,
 }: Props) {
   return (
-    <g className={`${styles.labels} ${styles[`${alongAxis}-labels`]}`}>
+    <g className={styles.labels} textAnchor="middle">
       {labels.map((label, idx) => {
         // x-axis is by default
         let x = offset.x + idx * tickWidth;
@@ -40,13 +40,16 @@ export const HorizontalLabels = React.memo(() => {
   const {
     labelsTickLengths,
     horizontalLabels,
-    container,
+    plot: { height, padding: { left, bottom } },
   } = useChartContext();
   return (
     <Labels
       alongAxis="x"
       labels={horizontalLabels}
-      offset={{ x: labelsTickLengths.x / 2, y: container.height * 0.95 }}
+      offset={{
+        x: left,
+        y: height + bottom / 2,
+      }}
       tickWidth={labelsTickLengths.x}
     />
   );
@@ -57,13 +60,28 @@ export const VerticalLabels = React.memo(() => {
     labelsTickLengths,
     verticalLabels,
     container,
+    plot: { padding: { left, right } },
   } = useChartContext();
   return (
-    <Labels
-      alongAxis="y"
-      labels={verticalLabels}
-      offset={{ x: container.width * 0.93, y: labelsTickLengths.y / 2 }}
-      tickWidth={labelsTickLengths.y}
-    />
+    <>
+      <Labels
+        alongAxis="y"
+        labels={verticalLabels}
+        offset={{
+          x: left / 2,
+          y: labelsTickLengths.y / 2,
+        }}
+        tickWidth={labelsTickLengths.y}
+      />
+      <Labels
+        alongAxis="y"
+        labels={verticalLabels}
+        offset={{
+          x: container.width - right / 2,
+          y: labelsTickLengths.y / 2,
+        }}
+        tickWidth={labelsTickLengths.y}
+      />
+    </>
   );
 });

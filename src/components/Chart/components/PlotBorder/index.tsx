@@ -3,13 +3,17 @@ import styles from './styles.module.scss';
 import useChartContext from '../../hooks/useChartContext';
 
 function PlotBorder() {
-  const { plot: { height, width } } = useChartContext();
+  const {
+    plot: { height, width, padding: { left } },
+  } = useChartContext();
   return (
     <g className={styles.grid}>
-      <line x1={0} x2={width} y1={0} y2={0} />
-      <line x1={0} x2={0} y1={0} y2={height} />
-      <line x1={0} x2={width} y1={height} y2={height} />
-      <line x1={width} x2={width} y1={0} y2={height} />
+      {/* horizontal lines */}
+      <line x1={left} x2={left + width} y1={0} y2={0} />
+      <line x1={left} x2={left + width} y1={height} y2={height} />
+      {/* vertical lines */}
+      <line x1={left} x2={left} y1={0} y2={height} />
+      <line x1={left + width} x2={left + width} y1={0} y2={height} />
     </g>
   );
 }

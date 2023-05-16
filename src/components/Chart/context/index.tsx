@@ -3,7 +3,9 @@ import useSVGContainer from '@/components/Chart/hooks/useSVGContainer';
 import { Periods } from '@/types';
 import format from 'date-fns/format';
 import { ChartContextProps, DataItem, DataKeys } from '../types';
-import { PLOT_AREA_SCALE, numberOfTicks, formatString } from '../config';
+import {
+  PLOT_AREA_SCALE, periodConfig, nVerticalTicks,
+} from '../config';
 import styles from './styles.module.css';
 import useDataScale from '../hooks/useDataScale';
 import useVerticalLabels from '../hooks/useVerticalLabels';
@@ -25,31 +27,43 @@ function Chart<T extends DataItem>({
   const plot = React.useMemo(() => ({
     width: container.width * PLOT_AREA_SCALE.x,
     height: container.height * PLOT_AREA_SCALE.y,
+    padding: {
+      top: 0,
+      bottom: container.height * (1 - PLOT_AREA_SCALE.y),
+      left: container.width * (1 - PLOT_AREA_SCALE.x) * 0.5,
+      right: container.width * (1 - PLOT_AREA_SCALE.x) * 0.5,
+    },
   }), [container.width, container.height]);
 
+  const nTicks = React.useMemo(() => ({
+    x: periodConfig.nHorizontalTicks[period],
+    y: nVerticalTicks,
+  }), [period]);
+
   const labelsTickLengths = React.useMemo(() => ({
-    x: plot.width / (1 + numberOfTicks.x),
-    y: plot.height / numberOfTicks.y,
-  }), [plot.width, plot.height]);
-  const offset = React.useMemo(() => ({
-    x: 0,
-    y: labelsTickLengths.y / 2,
-  }), [labelsTickLengths.y]);
-  const dataTickLengths = {
-    x: plot.width / data.length,
-    y: labelsTickLengths.y,
-  };
+    x: plot.width / nTicks.x,
+    y: plot.height / nTicks.y,
+  }), [plot.width, plot.height, nTicks.x, nTicks.y]);
 
   const { labels: verticalLabels, minValue, maxValue } = useVerticalLabels<T>(
     data,
     dataKeys.y,
-    numberOfTicks.y,
+    nTicks.y,
   );
   const horizontalLabels = useHorizontalLabels<T>(
     data,
     dataKeys.x,
-    numberOfTicks.x,
+    nTicks.x,
   );
+
+  const dataTickLengths = {
+    x: plot.width / data.length,
+    y: labelsTickLengths.y,
+  };
+  const dataOffset = React.useMemo(() => ({
+    x: plot.padding.left,
+    y: labelsTickLengths.y / 2,
+  }), [labelsTickLengths.y, plot.padding.left]);
   const dataPoints = useDataScale<T>(
     data,
     dataKeys.y,
@@ -57,7 +71,7 @@ function Chart<T extends DataItem>({
     maxValue,
     plot.height,
     dataTickLengths,
-    offset,
+    dataOffset,
   );
 
   // See details regarding this memoization in eslint : react/jsx-no-constructed-context-values
@@ -66,20 +80,24 @@ function Chart<T extends DataItem>({
     plot,
     period,
     labelsTickLengths,
-    offset,
+    dataOffset,
     verticalLabels,
-    horizontalLabels: horizontalLabels.map((d) => format(d, formatString[period])),
+    horizontalLabels: horizontalLabels.map(
+      (d) => format(d, periodConfig.dateStringFormat[period]),
+    ),
     dataKeys,
     data: dataPoints,
+    nTicks,
   }), [
     container,
     plot,
     period,
     labelsTickLengths,
-    offset,
+    dataOffset,
     verticalLabels, horizontalLabels,
     dataKeys,
     dataPoints,
+    nTicks,
   ]);
 
   return (

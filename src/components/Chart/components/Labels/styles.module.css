@@ -7,11 +7,3 @@
     font-size: 2vw;
   }
 }
-
-.labels .x-labels {
-  text-anchor: middle;
-}
-
-.labels .y-labels {
-  text-anchor: start;
-}

@@ -15,6 +15,13 @@ export type Dimensions = {
   height: number;
 };
 
+export type Padding = {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
 export type Point = {
   x: number;
   y: number;
@@ -22,12 +29,13 @@ export type Point = {
 
 export type ChartContextProps = {
   container: Dimensions;
-  plot: Dimensions;
+  plot: Dimensions & { padding: Padding };
   period: Periods;
   labelsTickLengths: Point;
-  offset: Point;
+  dataOffset: Point;
   verticalLabels: Array<number | string>;
   horizontalLabels: Array<number | string>;
   dataKeys: DataKeys<DataItem>;
   data: Array<DataItem>;
+  nTicks: Point;
 };
