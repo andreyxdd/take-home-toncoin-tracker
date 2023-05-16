@@ -10,7 +10,7 @@ export function tickRange(array: Array<number>, nTicks: number) {
   const ticks = [];
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < nTicks; ++i) {
-    ticks[i] = (maxValue - i * tickWidth).toPrecision(3);
+    ticks[i] = maxValue - i * tickWidth;
   }
 
   return { ticks, minValue, maxValue };

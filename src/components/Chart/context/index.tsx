@@ -20,6 +20,15 @@ type Props<T extends DataItem> = {
   dataKeys: DataKeys<DataItem>;
 };
 
+const numberFormatter = new Intl.NumberFormat(
+  'en-US',
+  {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+    notation: 'compact',
+  },
+);
+
 function Chart<T extends DataItem>({
   children, period, data, dataKeys,
 }: Props<T>) {
@@ -81,7 +90,9 @@ function Chart<T extends DataItem>({
     period,
     labelsTickLengths,
     dataOffset,
-    verticalLabels,
+    verticalLabels: verticalLabels.map(
+      (v) => numberFormatter.format(v),
+    ),
     horizontalLabels: horizontalLabels.map(
       (d) => format(d, periodConfig.dateStringFormat[period]),
     ),
