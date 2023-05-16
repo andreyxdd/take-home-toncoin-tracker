@@ -2,17 +2,16 @@
   font-size: 12px;
 }
 
+@media only screen and (max-width: 600px) {
+  .labels {
+    font-size: 2vw;
+  }
+}
+
 .labels .x-labels {
   text-anchor: middle;
 }
 
 .labels .y-labels {
   text-anchor: start;
-}
-
-.label-title {
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 12px;
-  fill: black;
 }

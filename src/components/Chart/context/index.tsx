@@ -29,7 +29,7 @@ function Chart<T extends DataItem>({
 
   const labelsTickLengths = React.useMemo(() => ({
     x: plot.width / (1 + numberOfTicks.x),
-    y: plot.height / (1 + numberOfTicks.y),
+    y: plot.height / numberOfTicks.y,
   }), [plot.width, plot.height]);
   const offset = React.useMemo(() => ({
     x: 0,

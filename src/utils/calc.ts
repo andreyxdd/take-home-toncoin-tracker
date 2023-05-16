@@ -12,7 +12,6 @@ export function tickRange(array: Array<number>, nTicks: number) {
   for (let i = 0; i < nTicks; ++i) {
     ticks[i] = (maxValue - i * tickWidth).toPrecision(3);
   }
-  ticks.push(minValue.toPrecision(3));
 
   return { ticks, minValue, maxValue };
 }
