@@ -1,10 +1,10 @@
 import React from 'react';
 import useSVGContainer from '@/components/Chart/hooks/useSVGContainer';
-import { DataItem, Period } from '@/types';
+import { DataItem, Interval } from '@/types';
 import format from 'date-fns/format';
 import { ChartContextProps, DataKeys } from '../types';
 import {
-  PLOT_AREA_SCALE, periodConfig, nVerticalTicks, numberFormatter,
+  PLOT_AREA_SCALE, intervalConfig, nVerticalTicks, numberFormatter,
 } from '../config';
 import styles from './styles.module.css';
 import useDataScale from '../hooks/useDataScale';
@@ -15,13 +15,13 @@ export const ChartContext = React.createContext<ChartContextProps | null>(null);
 
 type Props<T extends DataItem> = {
   children: React.ReactNode;
-  period: Period;
+  interval: Interval;
   data: Array<T>;
   dataKeys: DataKeys<DataItem>;
 };
 
 function Chart<T extends DataItem>({
-  children, period, data, dataKeys,
+  children, interval, data, dataKeys,
 }: Props<T>) {
   const { ref, container } = useSVGContainer();
   const plot = React.useMemo(() => ({
@@ -36,9 +36,9 @@ function Chart<T extends DataItem>({
   }), [container.width, container.height]);
 
   const nTicks = React.useMemo(() => ({
-    x: periodConfig.nHorizontalTicks[period],
+    x: intervalConfig.nHorizontalTicks[interval],
     y: nVerticalTicks,
-  }), [period]);
+  }), [interval]);
 
   const labelsTickLengths = React.useMemo(() => ({
     x: plot.width / nTicks.x,
@@ -78,14 +78,14 @@ function Chart<T extends DataItem>({
   const momoizedData = React.useMemo(() => ({
     container,
     plot,
-    period,
+    interval,
     labelsTickLengths,
     dataOffset,
     verticalLabels: verticalLabels.map(
       (v) => numberFormatter().format(v),
     ),
     horizontalLabels: horizontalLabels.map(
-      (d) => format(d, periodConfig.dateStringFormat[period]),
+      (d) => format(d, intervalConfig.dateStringFormat[interval]),
     ),
     dataKeys,
     data: dataPoints,
@@ -93,7 +93,7 @@ function Chart<T extends DataItem>({
   }), [
     container,
     plot,
-    period,
+    interval,
     labelsTickLengths,
     dataOffset,
     verticalLabels, horizontalLabels,

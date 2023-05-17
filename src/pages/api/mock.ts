@@ -5,7 +5,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import Series from 'time-series-data-generator';
 
 import { DataItem } from '@/types';
-import { isPeriod } from '@/utils/typeguards';
+import { isInterval } from '@/utils/typeguards';
 import sub from 'date-fns/sub';
 
 const queryParams = {
@@ -19,14 +19,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Array<DataItem>>,
 ) {
-  const { query: { period } } = req;
+  const { query: { interval } } = req;
 
-  if (typeof period !== 'string') return res.status(404).end();
-  if (!isPeriod(period)) return res.status(404).end();
+  if (typeof interval !== 'string') return res.status(404).end();
+  if (!isInterval(interval)) return res.status(404).end();
 
   try {
     const until = sub(new Date(), { days: 1 }).toISOString();
-    const from = sub(new Date(until), { days: queryParams[period] }).toISOString();
+    const from = sub(new Date(until), { days: queryParams[interval] }).toISOString();
     const series = new Series({
       until,
       from,

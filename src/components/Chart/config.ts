@@ -4,7 +4,7 @@ export const PLOT_AREA_SCALE = {
 };
 export const DATA_POINT_SIZE = 4;
 
-export const periodConfig = {
+export const intervalConfig = {
   dateStringFormat: {
     day: 'h aa',
     week: 'LLL d',

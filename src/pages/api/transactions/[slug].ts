@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { DataItem } from '@/types';
-import { isTransactionsSlug, isPeriod } from '@/utils/typeguards';
+import { isTransactionsSlug, isInterval } from '@/utils/typeguards';
 
 const queryParams = {
   day: 1,
@@ -14,13 +14,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Array<DataItem>>,
 ) {
-  const { query: { slug, period } } = req;
+  const { query: { slug, interval } } = req;
 
   if (typeof slug !== 'string') return res.status(404).end();
   if (!isTransactionsSlug(slug)) return res.status(404).end();
 
-  if (typeof period !== 'string') return res.status(404).end();
-  if (!isPeriod(period)) return res.status(404).end();
+  if (typeof interval !== 'string') return res.status(404).end();
+  if (!isInterval(interval)) return res.status(404).end();
 
   let multiplier = 1;
   if (slug === 'tps') multiplier = 1 / (24 * 60 * 60);
@@ -35,7 +35,7 @@ export default async function handler(
     const data: Array<DataItem> = json.map((item: any) => ({
       date: item.to_timestamp * 1000, // convert to ms
       [slug]: item.transactions_count * multiplier,
-    })).slice(-queryParams[period] - 1);
+    })).slice(-queryParams[interval] - 1);
     return res.status(200).send(data);
   } catch (e) {
     console.error(e);

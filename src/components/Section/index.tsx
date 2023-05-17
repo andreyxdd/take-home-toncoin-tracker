@@ -1,5 +1,5 @@
 import React from 'react';
-import { NonEmptyArray, Period } from '@/types';
+import { NonEmptyArray, Interval, IntervalWithoutDay } from '@/types';
 import useQueryWrapper from '@/hooks/useQueryWrapper';
 import Button from '../Button';
 import {
@@ -12,15 +12,15 @@ type Props = {
   url: string;
   staleTime: number;
   dataKeys: { x: string, y: string };
-  availablePeriods: NonEmptyArray<Period>;
+  availableIntervals: NonEmptyArray<Interval> | NonEmptyArray<IntervalWithoutDay>;
 };
 
 function Section({
-  title, url, staleTime, dataKeys, availablePeriods,
+  title, url, staleTime, dataKeys, availableIntervals,
 }: Props) {
-  const [period, setPeriod] = React.useState(availablePeriods[0] as Period);
+  const [interval, setInterval] = React.useState(availableIntervals[0]);
   const { data, isError, isLoading } = useQueryWrapper(
-    `${url}?period=${period}`,
+    `${url}?interval=${interval}`,
     staleTime,
   );
 
@@ -52,18 +52,18 @@ function Section({
       <div className={styles.subnavbar}>
         <h3>{title}</h3>
         <div className={styles['button-container']}>
-          {availablePeriods.map((p) => (
+          {availableIntervals.map((p) => (
             <Button
               key={p}
-              isClicked={p === period}
-              onClick={() => { setPeriod(p); }}
+              isClicked={p === interval}
+              onClick={() => { setInterval(p); }}
             >
               {p}
             </Button>
           ))}
         </div>
       </div>
-      <Chart data={data} period={period} dataKeys={dataKeys}>
+      <Chart data={data} interval={interval} dataKeys={dataKeys}>
         <PlotBorder />
         <HorizontalGridLines />
         <HorizontalLabels />

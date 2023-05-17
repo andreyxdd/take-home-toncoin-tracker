@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { DataItem } from '@/types';
-import { isMarketSlug, isPeriod } from '@/utils/typeguards';
+import { isMarketSlug, isInterval } from '@/utils/typeguards';
 
 const queryParams = {
   day: {
@@ -26,20 +26,20 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Array<DataItem>>,
 ) {
-  const { query: { slug, period } } = req;
+  const { query: { slug, interval } } = req;
 
   if (typeof slug !== 'string') return res.status(404).end();
   if (!isMarketSlug(slug)) return res.status(404).end();
 
-  if (typeof period !== 'string') return res.status(404).end();
-  if (!isPeriod(period)) return res.status(404).end();
+  if (typeof interval !== 'string') return res.status(404).end();
+  if (!isInterval(interval)) return res.status(404).end();
 
   try {
     const apiUrl: string | undefined = process.env.COINGECKO_STATS_API;
     if (!apiUrl) throw new Error('COINGECKO_STATS_API is not found');
 
     const response = await fetch(
-      `${apiUrl}${queryParams[period].days}${queryParams[period].interval}`,
+      `${apiUrl}${queryParams[interval].days}${queryParams[interval].interval}`,
     );
     const json = await response.json();
 

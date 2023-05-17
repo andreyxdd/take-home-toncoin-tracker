@@ -1,4 +1,4 @@
-import { DataItem, Period } from '@/types';
+import { DataItem, Interval } from '@/types';
 
 export type DataKeys<T> = {
   x: keyof T;
@@ -25,7 +25,7 @@ export type Point = {
 export type ChartContextProps = {
   container: Dimensions;
   plot: Dimensions & { padding: Padding };
-  period: Period;
+  interval: Interval;
   labelsTickLengths: Point;
   dataOffset: Point;
   verticalLabels: Array<number | string>;
