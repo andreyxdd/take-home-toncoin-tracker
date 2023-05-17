@@ -36,22 +36,22 @@ export default function Document() {
         <link rel="shortcut icon" href="/favicon.ico" />
 
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:url" content="https://yourdomain.com" />
+        <meta name="twitter:url" content="https://toncoin-tracker.vercel.app/" />
         <meta name="twitter:title" content="Toncoin Tracker" />
         <meta name="twitter:description" content="Simple PWA that plots toncoin historical data" />
         <meta
           name="twitter:image"
-          content="https://yourdomain.com/icon-192x192.png"
+          content="https://toncoin-tracker.vercel.app/icon-192x192.png"
         />
         <meta name="twitter:creator" content="@imamdev_" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Toncoin Tracker" />
         <meta property="og:description" content="Simple PWA that plots toncoin historical data" />
         <meta property="og:site_name" content="Toncoin Tracker" />
-        <meta property="og:url" content="https://yourdomain.com" />
+        <meta property="og:url" content="https://toncoin-tracker.vercel.app/" />
         <meta
           property="og:image"
-          content="https://yourdomain.com/icon-192x192.png"
+          content="https://toncoin-tracker.vercel.app/icon-192x192.png"
         />
       </Head>
       <body>

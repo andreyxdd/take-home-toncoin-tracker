@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { Inter } from 'next/font/google';
-import styles from '@/styles/Home.module.css';
+import styles from '@/styles/Home.module.scss';
 import React from 'react';
 import Sections from '@/components/Sections';
 
@@ -20,6 +20,16 @@ export default function Home() {
           <h2>The Open Network: Market Indicators</h2>
           <Sections />
         </div>
+        <footer className={styles['footer-container']}>
+          <div className={styles['footer-content']}>
+            <p>Proudly created by Andrey Volkov</p>
+            <p>
+              Checkout source code on
+              {' '}
+              <a href="https://github.com/andreyxdd/toncoin-tracker">Github</a>
+            </p>
+          </div>
+        </footer>
       </main>
     </>
   );

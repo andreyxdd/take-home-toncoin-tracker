@@ -27,7 +27,7 @@ export function Labels({
         }
 
         return (
-          <text x={x} y={y} key={`key-${label}-${idx}`}>
+          <text x={x} y={y} key={`key-${label}-${idx}`} className={styles[`${alongAxis}-labels`]}>
             {label}
           </text>
         );

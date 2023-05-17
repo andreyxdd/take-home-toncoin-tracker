@@ -1,7 +1,7 @@
 import React from 'react';
 import format from 'date-fns/format';
 import styles from './styles.module.scss';
-import { DATA_POINT_SIZE } from '../../config';
+import { DATA_POINT_SIZE, numberFormatter } from '../../config';
 import useChartContext from '../../hooks/useChartContext';
 
 type Props = {
@@ -39,19 +39,20 @@ function Tooltip({ point, height, xTickWidth }: Props) {
         style={{
           display: isVisible ? 'block' : 'none',
           height: '100%',
-          width: plot.padding.left * 2,
+          width: plot.padding.left * 1.9,
         }}
+        overflow="visible"
       >
         <div className={styles['tool-tip']}>
+          <p className={styles.date}>{format(point[dataKeys.x], 'MMM d, yy p')}</p>
           <p>
-            <b>
+            <span className={styles['tip-label']}>
               {dataKeys.y}
               :
-            </b>
+            </span>
             {' '}
-            {point[dataKeys.y].toPrecision(4)}
+            {numberFormatter(3).format(point[dataKeys.y])}
           </p>
-          <p>{format(point[dataKeys.x], 'PPp')}</p>
         </div>
       </foreignObject>
     </>

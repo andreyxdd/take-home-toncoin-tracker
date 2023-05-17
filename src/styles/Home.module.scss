@@ -1,0 +1,43 @@
+@use 'src/styles/_variables.scss' as *;
+
+.main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  min-width: min(90ch, 100% - 1rem);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4vh;
+  padding-top: 6vh;
+  padding-bottom: 6vh;
+}
+
+.footer-container {
+  border: 1px solid $main-grey;
+  width: 100vw;
+  font-size: 12px;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .footer-container {
+    font-size: 3.5vw;
+  }
+  .container {
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }
+}

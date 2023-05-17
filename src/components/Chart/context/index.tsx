@@ -4,7 +4,7 @@ import { Periods } from '@/types';
 import format from 'date-fns/format';
 import { ChartContextProps, DataItem, DataKeys } from '../types';
 import {
-  PLOT_AREA_SCALE, periodConfig, nVerticalTicks,
+  PLOT_AREA_SCALE, periodConfig, nVerticalTicks, numberFormatter,
 } from '../config';
 import styles from './styles.module.css';
 import useDataScale from '../hooks/useDataScale';
@@ -19,15 +19,6 @@ type Props<T extends DataItem> = {
   data: Array<T>;
   dataKeys: DataKeys<DataItem>;
 };
-
-const numberFormatter = new Intl.NumberFormat(
-  'en-US',
-  {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-    notation: 'compact',
-  },
-);
 
 function Chart<T extends DataItem>({
   children, period, data, dataKeys,
@@ -91,7 +82,7 @@ function Chart<T extends DataItem>({
     labelsTickLengths,
     dataOffset,
     verticalLabels: verticalLabels.map(
-      (v) => numberFormatter.format(v),
+      (v) => numberFormatter().format(v),
     ),
     horizontalLabels: horizontalLabels.map(
       (d) => format(d, periodConfig.dateStringFormat[period]),

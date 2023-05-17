@@ -5,7 +5,7 @@ export function range({ from = 0, to }:{ from?: number, to: number }):Array<numb
 export function tickRange(array: Array<number>, nTicks: number) {
   const maxValue = array.reduce((acc, curr) => Math.max(acc, curr), -Infinity);
   const minValue = array.reduce((acc, curr) => Math.min(acc, curr), Infinity);
-  const tickWidth = (Math.abs(maxValue - minValue)) / nTicks;
+  const tickWidth = (Math.abs(maxValue - minValue)) / (nTicks - 1);
 
   const ticks = [];
   // eslint-disable-next-line no-plusplus

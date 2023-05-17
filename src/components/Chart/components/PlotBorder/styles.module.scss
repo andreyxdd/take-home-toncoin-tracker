@@ -1,5 +1,7 @@
+@use 'src/styles/_variables.scss' as *;
+
 .grid {
-  stroke: #ccc;
+  stroke: $main-grey;
   stroke-dasharray: 0;
   stroke-width: 1;
 }

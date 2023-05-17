@@ -1,5 +1,4 @@
 .subsection {
-  border: 1px solid black;
   height: 500px;
   display: flex;
   flex-direction: column;
@@ -19,13 +18,21 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  gap: 1rem;
 }
 
 .button-container {
   margin-left: auto;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
   gap: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .button-container {
+    margin-left: 0;
+  }
+  .subnavbar{
+    flex-direction: column;
+  }
 }

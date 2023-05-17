@@ -20,7 +20,7 @@ export function GridLines({ nTicks, alongAxis }: Props) {
       {range({ to: nTicks }).map((idx) => {
         // alongAxis === 'x' is default:
         let x1 = dataOffset.x;
-        let x2 = +dataOffset.x + width;
+        let x2 = dataOffset.x + width;
         let y1 = dataOffset.y + idx * labelsTickLengths.y;
         let y2 = dataOffset.y + idx * labelsTickLengths.y;
 

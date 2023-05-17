@@ -8,14 +8,14 @@
 }
 
 @keyframes example {
-  0%   {fill: $main;}
+  0%   {fill: $main-blue;}
   45%  {fill: $secondary-dark;}
   55%  {fill: $secondary-dark;}
-  100% {fill: $main;}
+  100% {fill: $main-blue;}
 }
 
 .last-point{
-  fill: $main;
+  fill: $main-blue;
   animation-name: example;
   animation-duration: 2s;
   animation-iteration-count: infinite;

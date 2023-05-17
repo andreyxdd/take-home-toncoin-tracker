@@ -42,6 +42,7 @@ function Section({
       </section>
     );
   }
+
   return (
     <section className={styles.subsection}>
       <div className={styles.subnavbar}>
