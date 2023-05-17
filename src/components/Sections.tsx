@@ -1,6 +1,7 @@
 import { NonEmptyArray, IntervalWithoutDay } from '@/types';
 import Section from './Section';
 
+// array of properties passed to the Chart component
 const sections = [
   {
     title: 'Price',

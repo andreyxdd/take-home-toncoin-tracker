@@ -1,7 +1,14 @@
 import React from 'react';
-import { tickDatesRange } from '@/utils/calc';
-import { DataItem } from '../types';
+import { DataItem } from '@/types';
+import { tickDatesRange } from '../utils/calc';
 
+/**
+ * Memoization hooks to construct the array of horionztal lables on the plot
+ * @param data original dataset
+ * @param dataKey a data key corresponding to the horizontal labels
+ * @param nTicks number of ticks
+ * @returns array of dates (timestamps)
+ */
 function useHorizontalLabels<T extends DataItem>(
   data: Array<T>,
   dataKey: keyof T,

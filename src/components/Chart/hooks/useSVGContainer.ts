@@ -1,13 +1,12 @@
 import React from 'react';
-import debounce from '@/utils/debounce';
+import debounce from '../utils/debounce';
 import useEventListener from '../../../hooks/useEventListener';
 
 /**
  * ACKNOWLEDGEMENTS:
  * Thanks to the usehooks-ts library (https://usehooks-ts.com/).
- * The deas implemented below were taken from there.
+ * The below implemented is based on their code.
  */
-
 function useSVGContainer(resizeDelay: number = 300) {
   // Mutable values like 'ref.current' aren't valid dependencies
   // because mutating them doesn't re-render the component:

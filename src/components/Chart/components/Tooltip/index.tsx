@@ -1,7 +1,7 @@
 import React from 'react';
 import format from 'date-fns/format';
 import styles from './styles.module.scss';
-import { DATA_POINT_SIZE, numberFormatter } from '../../config';
+import config from '../../config';
 import useChartContext from '../../hooks/useChartContext';
 
 type Props = {
@@ -30,7 +30,7 @@ function Tooltip({ point, height, xTickWidth }: Props) {
         className={styles.point}
         cx={point.x}
         cy={point.y}
-        r={DATA_POINT_SIZE}
+        r={config.dataPointSize}
       />
       <foreignObject
         x={point.x - plot.padding.left}
@@ -51,7 +51,7 @@ function Tooltip({ point, height, xTickWidth }: Props) {
               :
             </span>
             {' '}
-            {numberFormatter(3).format(point[dataKeys.y])}
+            {config.numberFormatter(3).format(point[dataKeys.y])}
           </p>
         </div>
       </foreignObject>

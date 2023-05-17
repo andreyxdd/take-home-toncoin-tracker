@@ -1,1 +1,2 @@
-This is a standalone `Chart` component. The idea here is to allow reuse this component (like an npm library).
+This is a standalone `Chart` component for historical data arrays (time series). The component has its own context provider (see `./context/index.tsx`), subcomponents (see `./components`), custom hooks (see `./hooks`), and some utility functions (see `/utils`). This component can potentially be enhanced and implemented as a separate npm library. The main configurations for styling, sizing, and other minor settings can be found in the `./config.ts`.
+

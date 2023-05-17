@@ -1,3 +1,9 @@
+/**
+ * Simple debounce wrapper
+ * @param fn callback
+ * @param ms debounce period (in milliseconds)
+ * @returns debounced function
+ */
 function debounce<ARG = unknown, RET = void>(
   fn: (args: ARG) => RET,
   ms: number,

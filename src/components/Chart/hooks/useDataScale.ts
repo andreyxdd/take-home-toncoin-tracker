@@ -3,15 +3,14 @@ import { DataItem } from '@/types';
 
 /**
  * Hook to project values from the data set into X and Y coordinates.
- * @param data - original dataset
- * @param yMin - minimal value in the dataset
- * @param yMax - maximum value in the dataset
- * @param height - height of the plot area
- * @param tickLength - length of the data point ticks (both vertical and horziontal)
- * @param offset - paddings for the data inside plot area (relative to the SVG container)
+ * @param data original dataset
+ * @param yMin minimal value in the dataset
+ * @param yMax maximum value in the dataset
+ * @param height height of the plot area
+ * @param tickLength length of the data point ticks (both vertical and horziontal)
+ * @param offset paddings for the data inside plot area (relative to the SVG container)
  * @returns new dataset with coordinates corresponding to the actual values
  */
-
 function useDataScale<T extends DataItem>(
   data: Array<T>,
   dataKey: keyof T,

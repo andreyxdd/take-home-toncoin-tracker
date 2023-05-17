@@ -1,7 +1,7 @@
 import React from 'react';
-import { range } from '@/utils/calc';
+import { range } from '../../utils/calc';
 import styles from './styles.module.scss';
-import { nVerticalTicks } from '../../config';
+import config from '../../config';
 import useChartContext from '../../hooks/useChartContext';
 
 type Props = {
@@ -40,5 +40,5 @@ export function GridLines({ nTicks, alongAxis }: Props) {
 }
 
 export const HorizontalGridLines = React.memo(
-  () => <GridLines alongAxis="x" nTicks={nVerticalTicks} />,
+  () => <GridLines alongAxis="x" nTicks={config.nVerticalTicks} />,
 );

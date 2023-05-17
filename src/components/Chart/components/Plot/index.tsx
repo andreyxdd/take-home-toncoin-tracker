@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './styles.module.scss';
 import Tooltip from '../Tooltip';
 import useChartContext from '../../hooks/useChartContext';
-import { DATA_POINT_SIZE } from '../../config';
+import config from '../../config';
 
 function Plot() {
   const { plot: { height }, data, dataKeys } = useChartContext();
@@ -10,7 +10,7 @@ function Plot() {
   return (
     <g>
       {data.map((point, idx, arr) => {
-        if (idx === 0) {
+        if (idx === 0) { // skipping the first line on the plot
           return (
             <Tooltip
               point={point}
@@ -42,7 +42,7 @@ function Plot() {
         className={styles['last-point']}
         cx={data[data.length - 1].x}
         cy={data[data.length - 1].y}
-        r={DATA_POINT_SIZE}
+        r={config.dataPointSize}
       />
     </g>
   );
