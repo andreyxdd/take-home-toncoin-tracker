@@ -7,19 +7,19 @@ const sections = [
   {
     title: 'Price',
     useQuery: usePriceQuery,
-    dataKeys: { x: 'date', y: 'price' },
+    dataKeys: { x: 'date', y: 'prices' },
     availablePeriods: ['day', 'week', 'month', 'year'],
   },
   {
     title: 'Trading Volume',
     useQuery: useVolumeQuery,
-    dataKeys: { x: 'date', y: 'volume' },
+    dataKeys: { x: 'date', y: 'total_volumes' },
     availablePeriods: ['day', 'week', 'month', 'year'],
   },
   {
     title: 'Transactions Count',
     useQuery: useTransactionsQuery,
-    dataKeys: { x: 'date', y: 'transactions_count' },
+    dataKeys: { x: 'date', y: 'total' },
     availablePeriods: ['week', 'month', 'year'] as any,
   },
 ];

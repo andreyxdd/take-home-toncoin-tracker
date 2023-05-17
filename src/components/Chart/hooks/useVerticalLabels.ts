@@ -1,6 +1,6 @@
 import React from 'react';
 import { tickRange } from '@/utils/calc';
-import { DataItem } from '../types';
+import { DataItem } from '@/types';
 
 function useVerticalLabels<T extends DataItem>(
   data: Array<T>,

@@ -1,8 +1,8 @@
 import React from 'react';
 import useSVGContainer from '@/components/Chart/hooks/useSVGContainer';
-import { Periods } from '@/types';
+import { DataItem, Period } from '@/types';
 import format from 'date-fns/format';
-import { ChartContextProps, DataItem, DataKeys } from '../types';
+import { ChartContextProps, DataKeys } from '../types';
 import {
   PLOT_AREA_SCALE, periodConfig, nVerticalTicks, numberFormatter,
 } from '../config';
@@ -15,7 +15,7 @@ export const ChartContext = React.createContext<ChartContextProps | null>(null);
 
 type Props<T extends DataItem> = {
   children: React.ReactNode;
-  period: Periods;
+  period: Period;
   data: Array<T>;
   dataKeys: DataKeys<DataItem>;
 };
@@ -57,7 +57,7 @@ function Chart<T extends DataItem>({
   );
 
   const dataTickLengths = {
-    x: plot.width / data.length,
+    x: plot.width / (data.length - 1),
     y: labelsTickLengths.y,
   };
   const dataOffset = React.useMemo(() => ({

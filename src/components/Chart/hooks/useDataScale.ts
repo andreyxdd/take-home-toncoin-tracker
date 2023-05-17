@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataItem } from '../types';
+import { DataItem } from '@/types';
 
 /**
  * Hook to project values from the data set into X and Y coordinates.

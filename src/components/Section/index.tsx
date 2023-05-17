@@ -1,24 +1,23 @@
 import React from 'react';
-import { NonEmptyArray, Periods } from '@/types';
+import { DataItem, NonEmptyArray, Period } from '@/types';
 import { UseQueryResult } from '@tanstack/react-query';
 import Button from '../Button';
 import {
   Chart, Plot, PlotBorder, HorizontalGridLines, HorizontalLabels, VerticalLabels,
 } from '../Chart';
 import styles from './styles.module.css';
-import { DataItem } from '../Chart/types';
 
 type Props = {
   title: string;
-  useQuery: (period: Periods) => UseQueryResult<Array<DataItem>>;
+  useQuery: (period: Period) => UseQueryResult<Array<DataItem>>;
   dataKeys: { x: string, y: string };
-  availablePeriods: NonEmptyArray<Periods>;
+  availablePeriods: NonEmptyArray<Period>;
 };
 
 function Section({
   title, useQuery, dataKeys, availablePeriods,
 }: Props) {
-  const [period, setPeriod] = React.useState(availablePeriods[0] as Periods);
+  const [period, setPeriod] = React.useState(availablePeriods[0] as Period);
   const { data, isError, isLoading } = useQuery(period);
 
   if (isError) {
