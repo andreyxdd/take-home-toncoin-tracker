@@ -17,7 +17,7 @@ export default function Home() {
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
         <div className={styles.container}>
-          <h2>The Open Network: Market Indicators</h2>
+          <h2>The Open Network: Historical Data</h2>
           <Sections />
         </div>
         <footer className={styles['footer-container']}>

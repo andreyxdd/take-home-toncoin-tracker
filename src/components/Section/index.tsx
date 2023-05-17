@@ -1,6 +1,6 @@
 import React from 'react';
-import { DataItem, NonEmptyArray, Period } from '@/types';
-import { UseQueryResult } from '@tanstack/react-query';
+import { NonEmptyArray, Period } from '@/types';
+import useQueryWrapper from '@/hooks/useQueryWrapper';
 import Button from '../Button';
 import {
   Chart, Plot, PlotBorder, HorizontalGridLines, HorizontalLabels, VerticalLabels,
@@ -9,16 +9,20 @@ import styles from './styles.module.css';
 
 type Props = {
   title: string;
-  useQuery: (period: Period) => UseQueryResult<Array<DataItem>>;
+  url: string;
+  staleTime: number;
   dataKeys: { x: string, y: string };
   availablePeriods: NonEmptyArray<Period>;
 };
 
 function Section({
-  title, useQuery, dataKeys, availablePeriods,
+  title, url, staleTime, dataKeys, availablePeriods,
 }: Props) {
   const [period, setPeriod] = React.useState(availablePeriods[0] as Period);
-  const { data, isError, isLoading } = useQuery(period);
+  const { data, isError, isLoading } = useQueryWrapper(
+    `${url}?period=${period}`,
+    staleTime,
+  );
 
   if (isError) {
     return (

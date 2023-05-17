@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { DataItem } from '@/types';
-import { isMarketSlug, isPeriod } from '@/utils/typguards';
+import { isMarketSlug, isPeriod } from '@/utils/typeguards';
 
 const queryParams = {
   day: {
