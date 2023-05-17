@@ -1,5 +1,5 @@
 import React from 'react';
-import { periods, Periods } from '@/types';
+import { NonEmptyArray, Periods } from '@/types';
 import { UseQueryResult } from '@tanstack/react-query';
 import Button from '../Button';
 import {
@@ -12,12 +12,13 @@ type Props = {
   title: string;
   useQuery: (period: Periods) => UseQueryResult<Array<DataItem>>;
   dataKeys: { x: string, y: string };
+  availablePeriods: NonEmptyArray<Periods>;
 };
 
 function Section({
-  title, useQuery, dataKeys,
+  title, useQuery, dataKeys, availablePeriods,
 }: Props) {
-  const [period, setPeriod] = React.useState<Periods>('day');
+  const [period, setPeriod] = React.useState(availablePeriods[0] as Periods);
   const { data, isError, isLoading } = useQuery(period);
 
   if (isError) {
@@ -48,7 +49,7 @@ function Section({
       <div className={styles.subnavbar}>
         <h3>{title}</h3>
         <div className={styles['button-container']}>
-          {periods.map((p) => (
+          {availablePeriods.map((p) => (
             <Button
               key={p}
               isClicked={p === period}

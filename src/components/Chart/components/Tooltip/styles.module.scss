@@ -38,16 +38,11 @@
 
 .tip-label{
   font-weight: 600;
-  display: inline-block;
 }
 
-.tip-label::first-letter{
-  text-transform: uppercase;
-}
-
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
   .tool-tip  {
-    font-size: 1.6vw;
+    font-size: 1.2vw;
     white-space: normal;
     text-overflow: clip;
     overflow: visible;

@@ -38,16 +38,16 @@ function Tooltip({ point, height, xTickWidth }: Props) {
         textAnchor="middle"
         style={{
           display: isVisible ? 'block' : 'none',
-          height: '100%',
-          width: plot.padding.left * 1.9,
+          height: '95%',
+          width: plot.padding.left * 2,
         }}
         overflow="visible"
       >
         <div className={styles['tool-tip']}>
           <p className={styles.date}>{format(point[dataKeys.x], 'MMM d, yy p')}</p>
-          <p>
-            <span className={styles['tip-label']}>
-              {dataKeys.y}
+          <p className={styles['tip-label']}>
+            <span>
+              Value
               :
             </span>
             {' '}
