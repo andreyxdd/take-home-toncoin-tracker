@@ -1,6 +1,6 @@
-# TON Tracker
+## TON Tracker
 
-## Introduction
+### Introduction
 
 This a simple dashboard PWA displaying some historical data of the [TON (the-open-network)](https://ton.org/en) coin. At the moment there are five sections:
 - Market price over the past day, week, month, year (updates every 10 minutes) 
@@ -21,7 +21,7 @@ Since it's a PWA, the native version can be downloaded by clicking the correspon
 
 The mobile version:
 
-## Local Development
+### Local Development
 
 First, in the root directory, create a `.env.local` file with the following variables:
 ```bash
@@ -41,9 +41,9 @@ npm run dev
 
 The app should now be available in the [http://localhost:3000](http://localhost:3000).
 
-## Possible Imporvements
+### Possible Imporvements
 
-### First SSR fetch
+#### First SSR fetch
 
 Currently, the app fetches data from the 'client' side, meaning the javascript code dynamically modifies the DOM to create the charts. A great [react-query](https://tanstack.com/query/v3/docs/react/overview) library was used in this case for fetching, refetching, revalidating, and caching API calls. 
 
@@ -51,7 +51,7 @@ However, there is an alternative approach to the first fetch -- which is to use 
 
 The only downside of this approach is that the data from `getServerSideProps` needs to be passed from the page component down to the Sections components, i.e., prop-drilling. That's why Next.js team came up with so-called "server components" that allow making asynchronous calls inside the component body, thus avoiding prop-drilling.
 
-### Chart code implementation: SVG vs Canvas
+#### Chart code implementation: SVG vs Canvas
 
 Most often, the chart components are implemented using the Canvas component. Nevertheless, for this little project, I've decided to utilize SVG elements. Let's quickly discuss the pros and cons of each:
 - SVG elements are resolution independent, while canvas elements are not (at least not out of the box)
