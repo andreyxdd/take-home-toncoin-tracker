@@ -6,7 +6,7 @@
 export default {
   // how much width and height the plot area gets from the main svg container
   plotAreaScale: {
-    x: 0.86,
+    x: 0.84,
     y: 0.9,
   },
 

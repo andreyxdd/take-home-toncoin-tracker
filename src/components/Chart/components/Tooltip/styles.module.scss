@@ -20,11 +20,10 @@
 }
 
 .tool-tip  {
-  font-size: 10px;
-  border: 0.5px solid black;
-  border-radius: 0.2rem;
+  font-size: 12px;
+  border: 0.5px solid $background-black;
+  border-radius: 0.4vh;
   background-color: white;
-  padding: 0.4rem;
   display: flex;
   flex-direction: column;
   white-space: nowrap;
@@ -33,22 +32,20 @@
 
 .date {
   font-weight: 300;
-  padding-bottom: 0.2rem;
+  padding-bottom: 0.2vh;
 }
 
 .tip-label{
   font-weight: 600;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 600px) {
   .tool-tip  {
-    font-size: 1.2vw;
-    white-space: normal;
-    text-overflow: clip;
-    overflow: visible;
-    padding: 0.2rem;
+    font-size: 1.4vw;
+    padding: 0.2vh;
+    display: inline-block;
   }
   .date{
-    padding-bottom: 0.1rem;
+    padding-bottom: 0.1vh;
   }
 }

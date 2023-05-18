@@ -25,7 +25,7 @@ const sections = [
     availableIntervals: ['week', 'month', 'year'] as any,
   },
   {
-    title: 'Transactions per second (TPS)',
+    title: 'Transactions Per Second (TPS)',
     url: '/api/transactions/tps',
     staleTime: Infinity, // no need to revalidate as this data doesn't change hourly
     dataKeys: { x: 'date', y: 'tps' },

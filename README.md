@@ -13,7 +13,7 @@ The app includes a  reusable chart component for representing different time ser
 
 Certain critical parts of the code include documentation.
 
-## Demo version
+### Demo Version and Screenshots
 
 Check out the demo version of the app deployed on Vercel: [toncoin-tracker](https://toncoin-tracker.vercel.app/).
 
@@ -43,7 +43,7 @@ The app should now be available in the [http://localhost:3000](http://localhost:
 
 ### Possible Imporvements
 
-#### First SSR fetch
+#### First SSR Fetch
 
 Currently, the app fetches data from the 'client' side, meaning the javascript code dynamically modifies the DOM to create the charts. A great [react-query](https://tanstack.com/query/v3/docs/react/overview) library was used in this case for fetching, refetching, revalidating, and caching API calls. 
 
@@ -51,7 +51,7 @@ However, there is an alternative approach to the first fetch -- which is to use 
 
 The only downside of this approach is that the data from `getServerSideProps` needs to be passed from the page component down to the Sections components, i.e., prop-drilling. That's why Next.js team came up with so-called "server components" that allow making asynchronous calls inside the component body, thus avoiding prop-drilling.
 
-#### Chart code implementation: SVG vs Canvas
+#### Chart Code Implementation: SVG vs Canvas
 
 Most often, the chart components are implemented using the Canvas component. Nevertheless, for this little project, I've decided to utilize SVG elements. Let's quickly discuss the pros and cons of each:
 - SVG elements are resolution independent, while canvas elements are not (at least not out of the box)
