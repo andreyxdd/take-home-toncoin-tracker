@@ -1,34 +1,63 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Introduction
 
-## Getting Started
+This a simple dashboard PWA displaying some historical data of the [TON (the-open-network) cryptocurrency](https://ton.org/en). At the moment there are five secionts:
+- Market price over the past day, week, month, year (updates every 10 minutes) 
+- Trading volume over the past day, week, month, year (updates every 10 minutes)
+- Total number of transaction over the past week, month, year
+- Transactions per second over the past week, month, year <strong>(defined as total count over the given day divided by the 24-hours - this might be incorrect)</strong>
+- Finally, there is a mock data series that was used for the testing and development
 
-First, run the development server:
+The app includes a  reusable chart component for representing differnt time series that is separated into its own context, has its own components, hooks, etc. See details in the corresponding [README](https://github.com/andreyxdd/toncoin-tracker/tree/main/src/components/Chart).
 
+Certain critical parts of the code include documentation.
+
+## Demo version
+
+Checkout the demo version of the app: [toncoin-tracker](https://toncoin-tracker.vercel.app/).
+
+Since, it's a PWA, the native version can be downloaded by clicking corresponding button in the browser:
+
+The mobile version:
+
+## Local Development
+
+First, in the root directory, create `.env.local` file with the following variables:
+```bash
+COINGECKO_STATS_API=https://api.coingecko.com/api/v3/coins/the-open-network/market_chart?vs_currency=usd
+TON_STATS_API=https://tontech.io/api/transactions_count
+```
+
+Then install necessary packages:
+```bash
+npm install
+```
+
+Now everything is ready to run the development server:
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app should be now available in the [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Possible Imporvements
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### First SSR fetch
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Currently, the app fetches data from the 'client' side, meaning the javascript code dynamically modifies the DOM to create the charts. A great [react-query](https://tanstack.com/query/v3/docs/react/overview) library was used in this case for fetching, refetching, revalidating, and caching API calls. 
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+However, there is an alternative approach to the first fetch -- which is to use `Next.js` functional to generate the HTML/CSS on the server without, asking client to do that. This can be done by utilizing the `getServerSideProps` method on the page component. The data recieved from `getServerSideProps` can be passed as `initialData` prop into the `useQueryWrapper` hooks. This would prevent react-query from making the first fetch.
 
-## Learn More
+The only downside of theis apporach is that the data from `getServerSideProps` needs to be passed form the page component down to the Sections components, i.e., prop-drilling. That's why Next.js team came up with so-called "server components" that allows to make asyncrhonus calls inside the component body, thus, avoiding prop-drilling.
 
-To learn more about Next.js, take a look at the following resources:
+### Chart code implementation: SVG vs Canvas
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Most often, the chart component are implemented using the Canvas component. Nevertheless, for this little project, I've decided to utlize SVG elemnts. Let's quickly discuss pros and cons of each:
+- SVG elements are resolution independent, while canvas elements are not (at least not out of the box)
+- SVG elements are in the DOM, meaining responding to user actions like clicks on particular elementsis as simple as responding to events on any other DOM element. In the other hand, it's harder to handle user interactions with Canvas.
+- The biggest downside of the SVG is that, it's not performant for a large number of elements. This is the opposite for the Canvas, which is often used for impressive 3D or immersive animations. Below chart shows performance comparsion.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![Canvas vs SVG](https://barchart-news-media-prod.aws.barchart.com/BCBLOG/c02c0334e9edbadf5d1d426557ee3056/0_ghn4jn17jwbh5yrw.png)
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+For this app, the SVG elemnts were selected, because:
+- It was easier to start
+- There were not so many elements to display on the charts
