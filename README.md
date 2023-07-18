@@ -19,7 +19,17 @@ Check out the demo version of the app deployed on Vercel: [toncoin-tracker](http
 
 Since it's a PWA, the native version can be downloaded by clicking the corresponding button in the browser:
 
+![Desktop screenshot PWA](https://github.com/andreyxdd/toncoin-tracker/blob/main/public/images/screenshot-desktop.png)
+
+![Desktop screenshot tooltip](https://github.com/andreyxdd/toncoin-tracker/blob/main/public/images/screenshot-desktop-tooltip.png)
+
 The mobile version:
+
+![Desktop screenshot smallest device](https://github.com/andreyxdd/toncoin-tracker/blob/main/public/images/screenshot-mobile.png)
+
+The tablet version:
+
+![Desktop screenshot ipad](https://github.com/andreyxdd/toncoin-tracker/blob/main/public/images/screenshot-ipad.png)
 
 ### Local Development
 
